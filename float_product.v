@@ -37,10 +37,10 @@ module float_product (
 	// round (round-to-nearest-even)
 	wire [22:0] mant_candidate;
 	wire guard, round_bit, sticky, round_up;
-	assign mant_candidate = norm1_mantissa[46:24];
-	assign guard          = norm1_mantissa[23];
-	assign round_bit      = norm1_mantissa[22];
-	assign sticky         = |norm1_mantissa[21:0];
+	assign mant_candidate = norm1_mantissa[45:23]; // 46 has to be dropped because it is the implicit 1
+	assign guard          = norm1_mantissa[22];
+	assign round_bit      = norm1_mantissa[21];
+	assign sticky         = |norm1_mantissa[20:0];
 	assign round_up       = guard & (round_bit | sticky | mant_candidate[0]);
 
 	wire [23:0] mant_rounded;
@@ -52,7 +52,7 @@ module float_product (
 	assign shift2        = mant_rounded[23];
 	assign final_mantissa = shift2 ? mant_rounded[23:1] : mant_rounded[22:0];
 
-	// adjust exponent for both shifts, clamp to 8 bits 
+	// adjust exponent for both shifts, foce to be 8 bits
 	wire signed [9:0] exp_final_wide;
 	assign exp_final_wide = exp_adjust + $signed({9'b0, shift1}) + $signed({9'b0, shift2});
 
@@ -95,3 +95,4 @@ module float_product (
 	assign float = {sC, eC, mC};
 
 endmodule
+
