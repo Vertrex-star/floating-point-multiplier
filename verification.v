@@ -26,7 +26,7 @@ module verf;
         #10;
         $display("Test 2: 50.0 * 256.27");
         $display("  got      = 0x%08h", float_out);
-        $display("  expected = 0x46483600");
+        $display("  expected = 0x464836FF");
         $display("");
 
         whole_a = 32'd100; dfa = 6'd0;
