@@ -34,7 +34,7 @@ module float_product (
 	assign shift1        = product[47];
 	assign norm1_mantissa = shift1 ? product[47:1] : product[46:0];
 
-	// round (round-to-nearest-even)
+	// round (round to nearest even)
 	wire [22:0] mant_candidate;
 	wire guard, round_bit, sticky, round_up;
 	assign mant_candidate = norm1_mantissa[45:23]; // 46 has to be dropped because it is the implicit 1
